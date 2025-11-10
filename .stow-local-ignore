@@ -1,0 +1,8 @@
+# Configuration files
+\.stowrc
+
+# Version control
+\.git
+
+# Readme fiel
+README.md

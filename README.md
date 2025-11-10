@@ -1,4 +1,4 @@
-# Personal configuration files
+# My dotfiles
 
 This repository contains my personal configuration files for the niri
 Wayland compositor.

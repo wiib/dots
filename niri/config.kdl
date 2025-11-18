@@ -8,29 +8,31 @@ input {
 		repeat-rate 30
 
         xkb {
-		layout "us"
-		options "compose:ralt"
+		    layout "latam"
         }
 
         // Enable numlock on startup
         numlock
     }
 
-    touchpad {
-        tap
-        natural-scroll
-    }
-
     mouse {
+        // Disable mouse acceleration
+        accel-profile "flat"
     }
 
     // Focus windows and outputs automatically when moving the mouse into them.
     focus-follows-mouse max-scroll-amount="0%"
 }
 
+gestures {
+    hot-corners {
+        off
+    }
+}
+
 // Output configuration.
 // https://yalter.github.io/niri/Configuration:-Outputs
-output "eDP-1" {
+output "HDMI-A-1" {
     mode "1920x1080@60.000"
     scale 1
     transform "normal"
@@ -42,17 +44,22 @@ output "eDP-1" {
 layout {
     gaps 4
 
+    // DankMaterialShell
+    background-color "transparent"
+
     center-focused-column "never"
+    always-center-single-column
 
     preset-column-widths {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
+        proportion 1.0
     }
 
     preset-window-heights { 
-	proportion 0.5
-	proportion 1.0
+        proportion 0.5
+        proportion 1.0
     }
 
     // Windows decide their initial width.
@@ -167,28 +174,12 @@ layout {
     }
 }
 
-// Startup programs
-spawn-sh-at-startup "qs -c /etc/xdg/quickshell/noctalia-shell"
-
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
     // skip-at-startup
 }
 
-// Uncomment this line to ask the clients to omit their client-side decorations if possible.
-// If the client will specifically ask for CSD, the request will be honored.
-// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
-// This option will also fix border/focus ring drawing behind some semitransparent windows.
-// After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
-
-// You can change the path where screenshots are saved.
-// A ~ at the front will be expanded to the home directory.
-// The path is formatted with strftime(3) to give you the screenshot date and time.
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-// You can also set this to null to disable saving screenshots to disk.
-// screenshot-path null
 
 // Animation settings.
 // The wiki explains how to configure individual animations:
@@ -201,19 +192,35 @@ animations {
     // slowdown 3.0
 }
 
-// Remove weird large focus ring from GTK portal windows
-window-rule {
-    match app-id="Xdg-desktop-portal-gtk" title="^Open"
-    open-floating true
-    
-    focus-ring {
-        off
-    }
-}
+//
+// WINDOW RULES
+//
 
 window-rule {
     match app-id="org.gnome.Nautilus" title="^Open"
     open-floating true
+}
+
+// Make inactive windows transparent
+window-rule {
+    match is-active=false
+    opacity 0.95
+}
+
+// Keep web browsers opaque
+window-rule {
+    match app-id="zen"
+    opacity 1.0
+}
+
+//
+// LAYER RULES
+//
+
+// Show DMS wallpaper in overview
+layer-rule {
+    match namespace="^quickshell$"
+    place-within-backdrop true
 }
 
 binds {
@@ -383,3 +390,14 @@ binds {
     // Power off monitors
     Mod+Shift+P { power-off-monitors; }
 }
+
+environment {
+  XDG_CURRENT_DESKTOP "niri"
+  QT_QPA_PLATFORM "wayland"
+  ELECTRON_OZONE_PLATFORM_HINT "auto"
+  QT_QPA_PLATFORMTHEME "gtk3"
+  QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+}
+
+// Clipboard history
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"

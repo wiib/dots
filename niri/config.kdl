@@ -230,7 +230,7 @@ binds {
     // Programs
     Mod+E       hotkey-overlay-title="Open a file explorer: nautilus" repeat=false { spawn "nautilus"; }
     Mod+Return  hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-    Mod+Space   hotkey-overlay-title="Run an Application: rofi" { spawn-sh "rofi -show drun"; }
+    Mod+Space   hotkey-overlay-title="Run an application: DMS Spotlight" { spawn-sh "dms ipc call spotlight toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Screen reader

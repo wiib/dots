@@ -86,7 +86,7 @@
       "width": 50
     }
   ],
-  "showWorkspaceIndex": true,
+  "showWorkspaceIndex": false,
   "showWorkspacePadding": false,
   "workspaceScrolling": false,
   "showWorkspaceApps": false,
@@ -95,7 +95,7 @@
   "dwlShowAllTags": false,
   "workspaceNameIcons": {},
   "waveProgressEnabled": true,
-  "clockCompactMode": true,
+  "clockCompactMode": false,
   "focusedWindowCompactMode": false,
   "runningAppsCompactMode": true,
   "keyboardLayoutNameCompactMode": false,
@@ -106,17 +106,21 @@
   "mediaSize": 1,
   "dankBarLeftWidgets": [
     {
-      "id": "runningApps",
+      "id": "workspaceSwitcher",
       "enabled": true
     },
     {
       "id": "layout",
       "enabled": true
+    },
+    {
+      "id": "runningApps",
+      "enabled": true
     }
   ],
   "dankBarCenterWidgets": [
     {
-      "id": "workspaceSwitcher",
+      "id": "clock",
       "enabled": true
     }
   ],
@@ -138,12 +142,11 @@
       "enabled": true
     },
     {
-      "id": "clock",
-      "enabled": true
-    },
-    {
       "id": "controlCenterButton",
-      "enabled": true
+      "enabled": true,
+      "showNetworkIcon": true,
+      "showBluetoothIcon": true,
+      "showAudioIcon": true
     }
   ],
   "dankBarWidgetOrder": [],
@@ -231,7 +234,7 @@
   "dankBarBorderOpacity": 1,
   "dankBarBorderThickness": 1,
   "popupGapsAuto": true,
-  "popupGapsManual": 45,
+  "popupGapsManual": 4,
   "modalDarkenBackground": true,
   "lockScreenShowPowerActions": true,
   "enableFprint": false,

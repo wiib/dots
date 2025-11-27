@@ -1,6 +1,39 @@
-prefer-no-csd
+////////////////
+/// MONITORS ///
+////////////////
 
-// Input device configuration.
+// https://yalter.github.io/niri/Configuration:-Outputs
+output "eDP-1" {
+    mode "1920x1080@60.000"
+    scale 1
+    transform "normal"
+    position x=0 y=0
+}
+
+/////////////////////////////
+/// ENVIRONMENT VARIABLES ///
+/////////////////////////////
+
+environment {
+    XCURSOR_SIZE "24"
+
+    QT_QPA_PLATFORM "wayland;xcb"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    QT_QPA_PLATFORMTHEME "gtk3"
+    QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+    GDK_BACKEND "wayland,x11,*"
+
+    QT_AUTO_SCREEN_SCALE_FACTOR "1"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+
+    _JAVA_AWT_WM_NONREPARENTING "1"
+    AWT_TOOLKIT "MToolkit"
+}
+
+/////////////
+/// INPUT ///
+/////////////
+
 // https://yalter.github.io/niri/Configuration:-Input
 input {
     keyboard {
@@ -12,7 +45,7 @@ input {
             options "compose:ralt"
         }
 
-        // Enable numlock on startup
+        // Numlock enabled on startup
         numlock
     }
 
@@ -21,185 +54,63 @@ input {
         natural-scroll
     }
 
-    mouse {
-    }
-
-    // Focus windows and outputs automatically when moving the mouse into them.
-    focus-follows-mouse max-scroll-amount="0%"
+    // Focus follows mouse when it results in at most 50% of the screen getting scrolled
+    focus-follows-mouse max-scroll-amount="50%"
 }
 
-// Output configuration.
-// https://yalter.github.io/niri/Configuration:-Outputs
-output "eDP-1" {
-    mode "1920x1080@60.000"
-    scale 1
-    transform "normal"
-    position x=0 y=0
-}
+//////////////
+/// LAYOUT ///
+//////////////
 
-// Layout configuration.
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
-    gaps 4
+    // DMS gap is 5, and focus ring width is 1
+    // → niri gaps should be 6
+    gaps 6
 
+    background-color "transparent"
+
+    always-center-single-column
     center-focused-column "never"
 
     preset-column-widths {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
+        proportion 1.0
     }
 
     preset-window-heights { 
-	proportion 0.5
-	proportion 1.0
+        proportion 0.5
+        proportion 1.0
     }
 
-    // Windows decide their initial width.
-    default-column-width { }
+    default-column-width { 
+        proportion 0.5 
+    }
 
-    // You can change how the focus ring looks.
     focus-ring {
-        // Uncomment this line to disable the focus ring.
-        // off
+        width 1
 
-        // How many logical pixels the ring extends out from the windows.
-        width 2
-
-        // Colors can be set in a variety of ways:
-        // - CSS named colors: "red"
-        // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
-        // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
-
-        // Color of the ring on the active monitor.
-        active-color "#7fc8ff"
-
-        // Color of the ring on inactive monitors.
-        //
-        // The focus ring only draws around the active window, so the only place
-        // where you can see its inactive-color is on other monitors.
-        inactive-color "#505050"
-
-        // You can also use gradients. They take precedence over solid colors.
-        // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
-        // The angle is the same as in linear-gradient, and is optional,
-        // defaulting to 180 (top-to-bottom gradient).
-        // You can use any CSS linear-gradient tool on the web to set these up.
-        // Changing the color space is also supported, check the wiki for more info.
-        //
-        // active-gradient from="#80c8ff" to="#c7ff7f" angle=45
-
-        // You can also color the gradient relative to the entire view
-        // of the workspace, rather than relative to just the window itself.
-        // To do that, set relative-to="workspace-view".
-        //
-        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
-    }
-
-    // You can also add a border. It's similar to the focus ring, but always visible.
-    border {
-        // The settings are the same as for the focus ring.
-        // If you enable the border, you probably want to disable the focus ring.
-        off
-
-        width 4
-        active-color "#ffc87f"
-        inactive-color "#505050"
-
-        // Color of the border around windows that request your attention.
-        urgent-color "#9b0000"
-
-        // Gradients can use a few different interpolation color spaces.
-        // For example, this is a pastel rainbow gradient via in="oklch longer hue".
-        //
-        // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
-
-        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+        // Same colors from Hyprland
+        active-gradient from="33ccffee" to="00ff99ee" angle=45
+        inactive-color "#595959aa" // Only seen on other monitors
     }
 
     // You can enable drop shadows for windows.
     shadow {
-        // Uncomment the next line to enable shadows.
-        // on
+        on
 
-        // By default, the shadow draws only around its window, and not behind it.
-        // Uncomment this setting to make the shadow draw behind its window.
-        //
-        // Note that niri has no way of knowing about the CSD window corner
-        // radius. It has to assume that windows have square corners, leading to
-        // shadow artifacts inside the CSD rounded corners. This setting fixes
-        // those artifacts.
-        //
-        // However, instead you may want to set prefer-no-csd and/or
-        // geometry-corner-radius. Then, niri will know the corner radius and
-        // draw the shadow correctly, without having to draw it behind the
-        // window. These will also remove client-side shadows if the window
-        // draws any.
-        //
-        // draw-behind-window true
-
-        // You can change how shadows look. The values below are in logical
-        // pixels and match the CSS box-shadow properties.
-
-        // Softness controls the shadow blur radius.
         softness 30
-
-        // Spread expands the shadow.
         spread 5
-
-        // Offset moves the shadow relative to the window.
         offset x=0 y=5
-
-        // You can also change the shadow color and opacity.
         color "#0007"
     }
-
-    // Struts shrink the area occupied by windows, similarly to layer-shell panels.
-    // You can think of them as a kind of outer gaps. They are set in logical pixels.
-    // Left and right struts will cause the next window to the side to always be visible.
-    // Top and bottom struts will simply add outer gaps in addition to the area occupied by
-    // layer-shell panels and regular gaps.
-    struts {
-        // left 64
-        // right 64
-        // top 64
-        // bottom 64
-    }
 }
 
-// Startup programs
-spawn-sh-at-startup "qs -c /etc/xdg/quickshell/noctalia-shell"
-
-hotkey-overlay {
-    // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
-    // skip-at-startup
-}
-
-// Uncomment this line to ask the clients to omit their client-side decorations if possible.
-// If the client will specifically ask for CSD, the request will be honored.
-// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
-// This option will also fix border/focus ring drawing behind some semitransparent windows.
-// After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
-
-// You can change the path where screenshots are saved.
-// A ~ at the front will be expanded to the home directory.
-// The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-// You can also set this to null to disable saving screenshots to disk.
-// screenshot-path null
-
-// Animation settings.
-// The wiki explains how to configure individual animations:
-// https://yalter.github.io/niri/Configuration:-Animations
-animations {
-    // Uncomment to turn off all animations.
-    // off
-
-    // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
-}
+/////////////
+/// RULES ///
+/////////////
 
 // Remove weird large focus ring from GTK portal windows
 window-rule {
@@ -211,10 +122,39 @@ window-rule {
     }
 }
 
+// Make Nautilus file select dialogs floating
 window-rule {
     match app-id="org.gnome.Nautilus" title="^Open"
     open-floating true
 }
+
+// Place DMS wallpaper in overview
+layer-rule {
+    match namespace="^quickshell$"
+    place-within-backdrop true
+}
+
+////////////////////////
+/// TOP-LEVEL CONFIG ///
+////////////////////////
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+prefer-no-csd
+
+////////////////////////////
+/// STARTUP APPLICATIONS ///
+////////////////////////////
+
+spawn-sh-at-startup "wl-clip-persist --clipboard regular --all-mime-type-regex '(?i)^(?!image/x-inkscape-svg).+'"
+
+spawn-sh-at-startup "wl-paste --watch cliphist store"
+
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
+/////////////
+/// BINDS ///
+/////////////
 
 binds {
     // Hotkey overlay
@@ -223,18 +163,18 @@ binds {
     // Programs
     Mod+E       hotkey-overlay-title="Open a file explorer: nautilus" repeat=false { spawn "nautilus"; }
     Mod+Return  hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-    Mod+Space   hotkey-overlay-title="Run an Application: rofi" { spawn-sh "rofi -show drun"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
-    // Screen reader
-    // Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+    // DMS
+    Mod+Space   hotkey-overlay-title="Open DMS Spotlight" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Mod+Shift+V hotkey-overlay-title="Open cliboard history" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Mod+Alt+L hotkey-overlay-title="Lock screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
 
     // Screen mirror window
     Mod+P hotkey-overlay-title="Mirror active monitor to a window" repeat=false { spawn-sh "wl-mirror $(niri msg --json focused-output | jq -r .name)"; }
 
     // Media keys
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.5"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1- -l 0.0"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
@@ -330,12 +270,6 @@ binds {
     Mod+Ctrl+8          { move-column-to-workspace 8; }
     Mod+Ctrl+9          { move-column-to-workspace 9; }
 
-    // Mouse wheel
-    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
-
     Mod+WheelScrollRight            { focus-column-right; }
     Mod+WheelScrollLeft             { focus-column-left; }
     Mod+Ctrl+WheelScrollRight       { move-column-right; }
@@ -369,7 +303,6 @@ binds {
 
     // Floating windows
     Mod+V       { toggle-window-floating; }
-    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
     // Tabbed display
     Mod+W { toggle-column-tabbed-display; }
@@ -382,10 +315,4 @@ binds {
 
     // Power off monitors
     Mod+Shift+P { power-off-monitors; }
-}
-
-environment {
-    QT_QPA_PLATFORM "wayland"
-    _JAVA_AWT_WM_NONREPARENTING "1"
-    AWT_TOOLKIT "MToolkit"
 }

@@ -8,8 +8,8 @@ input {
 		repeat-rate 30
 
         xkb {
-		layout "us"
-		options "compose:ralt"
+            layout "us"
+            options "compose:ralt"
         }
 
         // Enable numlock on startup
@@ -382,4 +382,10 @@ binds {
 
     // Power off monitors
     Mod+Shift+P { power-off-monitors; }
+}
+
+environment {
+    QT_QPA_PLATFORM "wayland"
+    _JAVA_AWT_WM_NONREPARENTING "1"
+    AWT_TOOLKIT "MToolkit"
 }

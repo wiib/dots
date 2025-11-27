@@ -112,6 +112,11 @@ layout {
 /// RULES ///
 /////////////
 
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
 // Remove weird large focus ring from GTK portal windows
 window-rule {
     match app-id="Xdg-desktop-portal-gtk" title="^Open"

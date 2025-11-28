@@ -142,11 +142,12 @@
       "enabled": true
     },
     {
+      "id": "battery",
+      "enabled": true
+    },
+    {
       "id": "controlCenterButton",
-      "enabled": true,
-      "showNetworkIcon": true,
-      "showBluetoothIcon": true,
-      "showAudioIcon": true
+      "enabled": true
     }
   ],
   "dankBarWidgetOrder": [],

@@ -112,9 +112,17 @@ layout {
 /// RULES ///
 /////////////
 
+// Round every window's corners
 window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
+}
+
+// Make inactive windows semitransparent
+window-rule {
+    match is-active=false
+
+    opacity 0.95
 }
 
 // Remove weird large focus ring from GTK portal windows

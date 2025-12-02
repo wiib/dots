@@ -89,10 +89,6 @@ layout {
 
     focus-ring {
         width 2
-
-        // Same colors from Hyprland
-        active-gradient from="33ccffee" to="00ff99ee" angle=45
-        inactive-color "#595959aa" // Only seen on other monitors
     }
 
     // You can enable drop shadows for windows.

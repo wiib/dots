@@ -64,9 +64,7 @@ input {
 
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
-    // DMS gap is 5, and focus ring width is 1
-    // → niri gaps should be 6
-    gaps 6
+    gaps 5
 
     background-color "transparent"
 
@@ -90,7 +88,7 @@ layout {
     }
 
     focus-ring {
-        width 1
+        width 2
 
         // Same colors from Hyprland
         active-gradient from="33ccffee" to="00ff99ee" angle=45
@@ -119,3 +117,9 @@ prefer-no-csd
 include "autostart.kdl"
 include "rules.kdl"
 include "binds.kdl"
+
+//////////////////
+/// DMS CONFIG ///
+//////////////////
+
+include "dms/colors.kdl"

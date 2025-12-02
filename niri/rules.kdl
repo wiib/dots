@@ -1,0 +1,38 @@
+/////////////
+/// RULES ///
+/////////////
+
+// Round every window's corners
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+// Make inactive windows semitransparent
+window-rule {
+    match is-active=false
+
+    opacity 0.95
+}
+
+// Remove weird large focus ring from GTK portal windows
+window-rule {
+    match app-id="Xdg-desktop-portal-gtk" title="^Open"
+    open-floating true
+    
+    focus-ring {
+        off
+    }
+}
+
+// Make Nautilus file select dialogs floating
+window-rule {
+    match app-id="org.gnome.Nautilus" title="^Open"
+    open-floating true
+}
+
+// Place DMS wallpaper in overview
+layer-rule {
+    match namespace="^quickshell$"
+    place-within-backdrop true
+}

@@ -195,7 +195,7 @@
   "lockBeforeSuspend": false,
   "preventIdleForMedia": false,
   "loginctlLockIntegration": true,
-  "launchPrefix": "",
+  "launchPrefix": "uwsm-app",
   "brightnessDevicePins": {},
   "wifiNetworkPins": {},
   "bluetoothDevicePins": {},
